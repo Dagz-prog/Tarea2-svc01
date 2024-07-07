@@ -1,0 +1,36 @@
+<div class="container-fluid">
+  <div>
+    <h2>Categories</h2>
+  </div>
+  <div>
+    @defer { @if(isAllowed === true){
+
+    <div class="d-flex justify-content-end pb-2">
+      <button
+        type="button"
+        (click)="formModal.show()"
+        class="btn btn-primary d-flex align-items-center"
+      >
+        <i class="fa-solid fa-plus white"></i>
+        <p class="mb-0">Add category</p>
+      </button>
+    </div>
+    }
+
+    <app-categories-list
+      [categoryList]="categoryService.categories$()"
+      [isAllowed]="isAllowed"
+    />
+
+    }@loading (after 100ms; minimum 1s) {
+    <app-loader />
+    }
+  </div>
+</div>
+
+<app-modal #formModal>
+  <app-categories-form
+    (callParentEvent)="onFormEventCalled($event)"
+    [title]="'Add Category'"
+  />
+</app-modal>

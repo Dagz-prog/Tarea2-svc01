@@ -1,0 +1,57 @@
+<div class="table-responsive table-container">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+
+        @if (isAllowed) {
+        <th scope="col">Created</th>
+        <th scope="col">Updated</th>
+        <th class="text-center" scope="col">Actions</th>
+
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of categoryList; track $index) {
+      <tr>
+        <th scope="row">{{ item.id }}</th>
+        <td>{{ item.name }}</td>
+        <td>{{ item.description }}</td>
+        @if(isAllowed){
+        <td>{{ item.createdAt | date }}</td>
+        <td>{{ item.updatedAt | date }}</td>
+        <td>
+          <div class="d-flex justify-content-evenly align-items-center">
+            <button
+              type="button"
+              (click)="showDetailModal(item, showModal)"
+              class="btn btn-secondary"
+            >
+              <i class="fa-solid fa-eye white"></i>
+            </button>
+            <button
+              type="button"
+              (click)="deleteCategory(item.id!)"
+              class="btn btn-danger"
+            >
+              <i class="fa-solid fa-trash white"></i>
+            </button>
+          </div>
+        </td>
+        }
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
+
+<app-modal #showModal>
+  <app-categories-form
+    (callParentEvent)="onFormEventCalled($event)"
+    [title]="'Update Category'"
+    [category]="selectedCategory"
+  />
+</app-modal>

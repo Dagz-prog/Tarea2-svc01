@@ -1,0 +1,37 @@
+<div class="container-fluid">
+  <div>
+    <h2>Products</h2>
+  </div>
+  <div>
+    @defer { @if (isAllowed) {
+
+    <div class="d-flex justify-content-end pb-2">
+      <button
+        type="button"
+        (click)="formModal.show()"
+        class="btn btn-primary d-flex align-items-center"
+      >
+        <i class="fa-solid fa-plus white"></i>
+        <p class="mb-0">Add product</p>
+      </button>
+    </div>
+    }
+
+    <app-product-list
+      [isAllowed]="isAllowed"
+      [productList]="productService.products$()"
+    />
+
+    } @loading (after 100ms; minimum 1s) {
+    <app-loader />
+    }
+  </div>
+</div>
+
+<app-modal #formModal>
+  <app-product-form
+    (callParentEvent)="onFormEventCalled($event)"
+    [title]="'Add Product'"
+    [categories]="categoryService.categories$()"
+  />
+</app-modal>

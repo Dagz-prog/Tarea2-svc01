@@ -1,0 +1,65 @@
+<div class="table-responsive table-container">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Category</th>
+        <th scope="col">Stock</th>
+        <th scope="col">Price</th>
+        @if (isAllowed) {
+        <th scope="col">Created</th>
+        <th scope="col">Updated</th>
+        <th class="text-center" scope="col">Actions</th>
+
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of productList; track $index) {
+      <tr>
+        <th scope="row">{{ item.id }}</th>
+        <td>{{ item.name }}</td>
+        <td>{{ item.description }}</td>
+        <td>{{ item.category?.name }}</td>
+        <td>
+          {{ item.qtyStock }}
+        </td>
+        <td>{{ item.price }}</td>
+        @if (isAllowed) {
+
+        <td>{{ item.createdAt | date }}</td>
+        <td>{{ item.updatedAt | date }}</td>
+        <td>
+          <div class="d-flex justify-content-evenly align-items-center">
+            <button
+              type="button"
+              (click)="showDetailModal(item, showModal)"
+              class="btn btn-secondary"
+            >
+              <i class="fa-solid fa-eye white"></i>
+            </button>
+            <button
+              type="button"
+              (click)="deleteProduct(item.id!)"
+              class="btn btn-danger"
+            >
+              <i class="fa-solid fa-trash white"></i>
+            </button>
+          </div>
+        </td>
+        }
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
+
+<app-modal #showModal>
+  <app-product-form
+    (callParentEvent)="onFormEventCalled($event)"
+    [title]="'Update Product'"
+    [updateProduct]="selectedProduct"
+  />
+</app-modal>
