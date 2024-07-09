@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { IProduct } from "../../../interfaces";
+import { ICategory, IProduct } from "../../../interfaces";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 
@@ -18,8 +18,8 @@ export class CategoriesFormComponent {
 
   @Input() title: string = "";
 
-  @Output() callParentEvent: EventEmitter<IProduct> =
-    new EventEmitter<IProduct>();
+  @Output() callParentEvent: EventEmitter<ICategory> =
+    new EventEmitter<ICategory>();
 
   addEditCategory() {
     this.callParentEvent.emit(this.category);
